@@ -4,8 +4,9 @@ import com.yundenis.spring_mvc.dao.UserDao;
 import com.yundenis.spring_mvc.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -26,25 +27,37 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void saveUser(User user) {
-        userDao.saveUser(user);
+    public void saveUser(User user, String[] roles) {
+        userDao.saveUser(user, roles);
     }
 
     @Transactional
     @Override
-    public User getUser(int id) {
+    public User getUser(Long id) {
         return userDao.getUser(id);
     }
 
     @Transactional
     @Override
-    public void updateUser(int id, User updatedUser) {
-        userDao.updateUser(id, updatedUser);
+    public User getUserByName(String name) {
+        return userDao.getUserByName(name);
     }
 
     @Transactional
     @Override
-    public void deleteUser(int id) {
+    public void updateUser(Long id, User updatedUser, String[] roles) {
+        userDao.updateUser(id, updatedUser, roles);
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(Long id) {
         userDao.deleteUser(id);
+    }
+
+    @Transactional
+    @Override
+    public User showUser(Principal principal) {
+        return userDao.showUser(principal);
     }
 }
