@@ -21,11 +21,10 @@
     <input type="text" th:field="*{email}" id="email"><br><br>
     <label for="password">Пароль</label>
     <input type="password" th:field="*{password}" id="password"><br><br>
-    <select size="3" multiple name="roles">
+    <select size="3" multiple th:name="roles">
         <option disabled>Выберите роль</option>
-        <option selected value="ROLE_ADMIN">Админ</option>
-        <option value="ROLE_USER">Пользователь</option>
-    </select>
+        <option th:each="role:${roles}" th:value="${role.role}" th:text="${#strings.substringAfter(role.role.toLowerCase(), 'role_')}"></option>
+    </select><br><br>
     <input type="submit" value="Сохранить"/>
 
 </form>

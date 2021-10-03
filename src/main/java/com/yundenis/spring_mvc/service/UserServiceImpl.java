@@ -27,6 +27,12 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
+    public void createFirstUser(User user) {
+        userDao.createFirstUser(user);
+    }
+
+    @Transactional
+    @Override
     public void saveUser(User user, String[] roles) {
         userDao.saveUser(user, roles);
     }
@@ -39,8 +45,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User getUserByName(String name) {
-        return userDao.getUserByName(name);
+    public User getUsernameByName(String name) {
+        return userDao.getUsernameByName(name);
     }
 
     @Transactional

@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -31,18 +32,21 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void createFirstUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        entityManager.merge(user);
+    }
+
+    @Override
     public void saveUser(User user, String[] roles) {
-        List<Role> listAllRoles = new ArrayList<>();
-        for(String role:roles) {
-            List<Role> listRoles = entityManager.createQuery("from Role where role=:role", Role.class)
-                    .setParameter("role", role).getResultList();
-            listAllRoles.add(listRoles.get(0));
-        }
-        Set<Role> selectedRoles = new HashSet<>(listAllRoles);
+
+        Set<Role> selectedRoles = new HashSet<>(Arrays.stream(roles).map(role->entityManager
+                .createQuery("from Role where role=:role", Role.class)
+                .setParameter("role", role).getResultList().get(0)).collect(Collectors.toList()));
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(selectedRoles);
-        entityManager.persist(user);
+        entityManager.merge(user);
     }
 
     @Override
@@ -51,9 +55,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByName(String name) {
+    public User getUsernameByName(String username) {
         return entityManager.createQuery("from User where username=:name", User.class)
-                .setParameter("name", name).getSingleResult();
+                .setParameter("name", username).getSingleResult();
     }
 
     @Override
@@ -71,13 +75,9 @@ public class UserDaoImpl implements UserDao {
             }
         }
 
-        List<Role> listAllRoles = new ArrayList<>();
-        for(String role:roles) {
-            List<Role> listRoles = entityManager.createQuery("from Role where role=:role", Role.class)
-                    .setParameter("role", role).getResultList();
-            listAllRoles.add(listRoles.get(0));
-        }
-        Set<Role> selectedRoles = new HashSet<>(listAllRoles);
+        Set<Role> selectedRoles = new HashSet<>(Arrays.stream(roles).map(role->entityManager
+                .createQuery("from Role where role=:role", Role.class)
+                .setParameter("role", role).getResultList().get(0)).collect(Collectors.toList()));
         userToBeUpdated.setRoles(selectedRoles);
     }
 
@@ -94,10 +94,4 @@ public class UserDaoImpl implements UserDao {
                 .setParameter("username", principal.getName()).getResultList().get(0);
     }
 
-//    @PostConstruct
-//    public void init() {
-//        TypedQuery<Role> query = entityManager.createQuery("from Role", Role.class);
-//        Set<List<Role>> roles = new HashSet<>();
-//        roles.add(query.getResultList());
-//    }
 }

@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
@@ -15,8 +17,13 @@ public class RoleDaoImpl implements RoleDao {
     private EntityManager entityManager;
 
     @Override
-    public List<Role> getAllRoles() {
+    public Set<Role> getAllRoles() {
         TypedQuery<Role> query = entityManager.createQuery("from Role", Role.class);
-        return query.getResultList();
+        return query.getResultList().stream().collect(Collectors.toSet());
+    }
+
+    @Override
+    public void saveRole(Role role) {
+        entityManager.persist(role);
     }
 }

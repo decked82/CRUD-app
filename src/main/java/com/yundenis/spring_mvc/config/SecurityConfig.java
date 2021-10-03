@@ -28,11 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.loginSuccessHandler = loginSuccessHandler;
     }
 
-//    @Autowired
-//    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
@@ -68,25 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // защищенные URL
                 .antMatchers("/admin").access("hasRole('ADMIN')")
                 .antMatchers("/user").access("hasAnyRole('ADMIN', 'USER')").anyRequest().authenticated();
-//                .and().formLogin()
-//                .successHandler(loginSuccessHandler);
     }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public DaoAuthenticationProvider daoAuthenticationProvider() {
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setUserDetailsService(userDetailsService);
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        return authenticationProvider;
-//    }
 }

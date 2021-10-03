@@ -1,6 +1,5 @@
 package com.yundenis.spring_mvc.controllers;
 
-import com.yundenis.spring_mvc.models.Role;
 import com.yundenis.spring_mvc.models.User;
 import com.yundenis.spring_mvc.service.RoleService;
 import com.yundenis.spring_mvc.service.UserService;
@@ -43,7 +42,9 @@ public class UsersController {
 
 
     @GetMapping("/admin/new")
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(Model model, @ModelAttribute("user") User user) {
+//        user.setRoles(roleService.getAllRoles());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "user-info";
     }
 
@@ -57,6 +58,7 @@ public class UsersController {
     @GetMapping("/admin/{id}/edit")
     public String editUser(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("roles", roleService.getAllRoles());
         return "edit-info";
     }
 

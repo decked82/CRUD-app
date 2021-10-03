@@ -9,11 +9,13 @@ public interface UserService {
 
     public List<User> showAllUsers();
 
+    public void createFirstUser(User user);
+
     public void saveUser(User user, String[] roles);
 
     public User getUser(Long id);
 
-    public User getUserByName(String name);
+    public User getUsernameByName(String name);
 
     public void updateUser(Long id, User user, String[] roles);
 
