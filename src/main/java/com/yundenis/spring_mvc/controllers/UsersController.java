@@ -43,7 +43,6 @@ public class UsersController {
 
     @GetMapping("/admin/new")
     public String newUser(Model model, @ModelAttribute("user") User user) {
-//        user.setRoles(roleService.getAllRoles());
         model.addAttribute("roles", roleService.getAllRoles());
         return "user-info";
     }
