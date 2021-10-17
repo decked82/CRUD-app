@@ -1,4 +1,4 @@
-package com.yundenis.spring_mvc.config;
+package com.yundenis.spring_mvc.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

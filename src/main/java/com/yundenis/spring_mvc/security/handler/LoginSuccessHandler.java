@@ -1,4 +1,4 @@
-package com.yundenis.spring_mvc.config.handler;
+package com.yundenis.spring_mvc.security.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -20,11 +20,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_ADMIN")) {
-            httpServletResponse.sendRedirect("/CRUD_app/admin");
+            httpServletResponse.sendRedirect("/admin");
         } else if (roles.contains("ROLE_ADMIN") || roles.contains("ROLE_USER")) {
-            httpServletResponse.sendRedirect("/CRUD_app/user");
+            httpServletResponse.sendRedirect("/user");
         } else {
-            httpServletResponse.sendRedirect("/CRUD_app/login");
+            httpServletResponse.sendRedirect("/login");
         }
     }
 }
