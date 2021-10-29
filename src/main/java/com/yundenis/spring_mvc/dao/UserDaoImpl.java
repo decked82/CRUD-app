@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(roleService.getRolesByName(roles));
-        entityManager.merge(user);
+        entityManager.persist(user);
     }
 
     @Override
