@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
@@ -56,5 +57,20 @@ public class Role implements GrantedAuthority {
                 ", role='" + role + '\'' +
                 ", user=" + user +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
+        Role roleObj = (Role) o;
+        return getId().equals(roleObj.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        return prime + Objects.hash(getId());
     }
 }

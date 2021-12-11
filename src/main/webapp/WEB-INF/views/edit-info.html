@@ -20,10 +20,11 @@
     <label for="email">Электронный адрес</label>
     <input type="text" th:field="*{email}" id="email"><br><br>
     <label for="password">Пароль</label>
-    <input type="password" th:field="*{password}" id="password" required><br><br>
-    <select size="3" multiple th:name="roles" required>
+    <input type="password" th:field="*{password}" id="password"><br><br>
+    <select size="3" multiple name="roles" required>
         <option disabled>Выберите роль</option>
-        <option th:each="role:${roles}" th:value="${role.role}" th:text="${#strings.substringAfter(role.role.toLowerCase(), 'role_')}"></option>
+        <option th:each="role:${roles}" th:value="${role.role}" th:text="${#strings.substringAfter(role.role.toLowerCase(), 'role_')}"
+                th:selected="${user.getRoles().contains(role)}"></option>
     </select><br><br>
     <input type="submit" value="Обновить"/>
 </form>

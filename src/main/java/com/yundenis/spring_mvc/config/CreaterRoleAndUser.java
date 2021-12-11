@@ -1,4 +1,4 @@
-package com.yundenis.spring_mvc.dao;
+package com.yundenis.spring_mvc.config;
 
 import com.yundenis.spring_mvc.models.Role;
 import com.yundenis.spring_mvc.models.User;

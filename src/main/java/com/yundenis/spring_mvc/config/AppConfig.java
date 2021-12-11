@@ -25,8 +25,12 @@ import java.util.Properties;
 @ComponentScan("com.yundenis.spring_mvc")
 public class AppConfig {
 
+    private final Environment env;
+
     @Autowired
-    private Environment env;
+    public AppConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public DataSource getDataSource() {

@@ -2,24 +2,21 @@ package com.yundenis.spring_mvc.dao;
 
 import com.yundenis.spring_mvc.models.User;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface UserDao {
 
-    public List<User> showAllUsers();
+    List<User> showAllUsers();
 
-    public  void createFirstUser(User user);
+    void createFirstUser(User user);
 
-    public void saveUser(User user, String[] roles);
+    void saveUser(User user, String[] roles);
 
-    public User getUser(Long id);
+    User getUser(Long id);
 
-    public User getUsernameByName(String name);
+    User getUsernameByName(String name);
 
-    public void updateUser(Long id, User user, String[] roles);
+    void updateUser(User user, String[] roles);
 
-    public void deleteUser(Long id);
-
-    public User showUser(Principal principal);
+    void deleteUser(Long id);
 }

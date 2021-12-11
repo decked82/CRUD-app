@@ -6,10 +6,10 @@ import java.util.Set;
 
 public interface RoleDao {
 
-    public Set<Role> getAllRoles();
+    Set<Role> getAllRoles();
 
-    public Set<Role> getRolesByName(String[] roles);
+    Set<Role> getRolesByName(String[] roles);
 
-    public void saveRole(Role role);
+    void saveRole(Role role);
 
 }

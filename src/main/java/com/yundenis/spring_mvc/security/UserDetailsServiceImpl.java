@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
-    public void UserDetailsServiceImpl(UserService userService) {
+    public UserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
     }
 
@@ -25,6 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-        return new User(user.getUsername(), user.getPassword(), user.getRoles());
+        return user;
     }
 }

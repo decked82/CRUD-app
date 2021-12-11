@@ -30,7 +30,7 @@ public class UsersController {
 
     @GetMapping("/user")
     public String showUser(Model model, Principal principal) {
-        model.addAttribute("newUser", userService.showUser(principal));
+        model.addAttribute("newUser", userService.getUsernameByName(principal.getName()));
         return "show-user";
     }
 
@@ -62,9 +62,9 @@ public class UsersController {
     }
 
     @PatchMapping("/admin/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id,
+    public String updateUser(@ModelAttribute("user") User user,
                              @RequestParam(value = "roles", required = false) String[] roles) {
-        userService.updateUser(id, user, roles);
+        userService.updateUser(user, roles);
         return "redirect:/admin";
     }
 
