@@ -8,17 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 @Controller
 @RequestMapping("/")
-public class UsersController {
+public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
 
     @Autowired
-    public UsersController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
@@ -28,18 +26,11 @@ public class UsersController {
         return "login";
     }
 
-    @GetMapping("/user")
-    public String showUser(Model model, Principal principal) {
-        model.addAttribute("newUser", userService.getUsernameByName(principal.getName()));
-        return "show-user";
-    }
-
     @GetMapping("/admin")
     public String showUsers(Model model) {
         model.addAttribute("users", userService.showAllUsers());
         return "show-users";
     }
-
 
     @GetMapping("/admin/new")
     public String newUser(Model model, @ModelAttribute("user") User user) {
