@@ -21,6 +21,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource(value = "classpath:db.properties")
+@PropertySource(value = "classpath:hiber.properties")
 @EnableTransactionManagement
 @ComponentScan("com.yundenis.spring_mvc")
 public class AppConfig {
