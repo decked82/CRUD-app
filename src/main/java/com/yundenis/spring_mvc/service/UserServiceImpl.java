@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<User> showAllUsers() {
         return userDao.showAllUsers();
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createFirstUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.createFirstUser(user);
+        userDao.updateUser(user);
     }
 
     @Transactional
@@ -41,16 +41,16 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user, String[] roles) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(roleService.getRolesByName(roles));
-        userDao.saveUser(user, roles);
+        userDao.saveUser(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public User getUser(Long id) {
         return userDao.getUser(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public User getUsernameByName(String name) {
         return userDao.getUsernameByName(name);
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             updatedUser.setPassword(userDao.getUser(updatedUser.getId()).getPassword());
         }
         updatedUser.setRoles(roleService.getRolesByName(roles));
-        userDao.updateUser(updatedUser, roles);
+        userDao.updateUser(updatedUser);
     }
 
     @Transactional
